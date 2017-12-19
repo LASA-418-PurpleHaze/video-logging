@@ -23,8 +23,8 @@ int main(){
 	
 	string message_from_roborio = "";
 	while(message_from_roborio != "END"){ //it's better to use a loop condition more specific to your project
-		contents = s_recv(subscriber); //use zhelpers s_recv to make it easier to read
-		cout << contents << endl; //it'd be better to do something more interesting with the contents of the message
+		message_from_roborio = s_recv(subscriber); //use zhelpers s_recv to make it easier to read
+		cout << message_from_roborio << endl; //it'd be better to do something more interesting with the contents of the message
 
 	}
 	return 0;	
