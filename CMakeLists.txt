@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(tracksend)
+project(receive_from_rio_template)
 find_package( OpenCV REQUIRED )
 find_package(PkgConfig)
 pkg_check_modules(PC_ZeroMQ QUIET zmq)
@@ -13,6 +13,6 @@ find_library(ZeroMQ_LIBRARY
 	)
 set(SOURCE_FILES main.cpp)
 include_directories( ${OpenCV_INCLUDE_DIRS} )
-add_executable(tracksend tracksend.cpp )
-target_link_libraries( tracksend ${OpenCV_LIBS}
+add_executable(receive_from_rio_template receive_from_rio_template.cpp )
+target_link_libraries( receive_from_rio_template ${OpenCV_LIBS}
 				   ${ZeroMQ_LIBRARY} )
