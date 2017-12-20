@@ -3,63 +3,63 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
+#include <iostream>
+
 using namespace cv;
 
 /// Global variables
 
-Mat src, src_gray;
-Mat dst, detected_edges;
-
-int edgeThresh = 1;
-int lowThreshold;
-int const max_lowThreshold = 100;
-int ratio = 3;
-int kernel_size = 3;
-std::string window_name = "Edge Map";
-
-/**
- * @function CannyThreshold
- * @brief Trackbar callback - Canny thresholds input with a ratio 1:3
- */
-void CannyThreshold(int, void*)
-{
-  /// Reduce noise with a kernel 3x3
-  blur( src_gray, detected_edges, Size(3,3) );
-
-  /// Canny detector
-  Canny( detected_edges, detected_edges, lowThreshold, lowThreshold*ratio, kernel_size );
-
-  /// Using Canny's output as a mask, we display our result
-  dst = Scalar::all(0);
-
-  src.copyTo( dst, detected_edges);
-  imshow( window_name, dst );
- }
-
+Mat left_side, right_side;
 
 /** @function main */
 int main( int argc, char** argv )
 {
   /// Load an image
-  src = imread( argv[1] );
-
-  if( !src.data )
-  { return -1; }
-
-  /// Create a matrix of the same type and size as src (for dst)
-  dst.create( src.size(), src.type() );
+  left_side = imread( argv[1] );
+  right_side = left_side;
+  if( !left_side.data )
+  {std::cout << "**error** provide sample image" << std::endl; return -1; }
 
   /// Convert the image to grayscale
-  cvtColor( src, src_gray, CV_BGR2GRAY );
+  cvtColor( left_side, right_side, CV_BGR2GRAY );
+
+  ///now they aren't on the same channel type, can't concat,
+  ///convert the right_side gray to bgr, will still be gray
+	///but it'll have 3 channels, just like the left side
+  cvtColor(right_side, right_side, CV_GRAY2BGR);
+
   /// Create a window
-  namedWindow( window_name, CV_WINDOW_AUTOSIZE );
+  namedWindow( "my window", CV_WINDOW_AUTOSIZE );
+  ///create a matrix that'll hold the tiled images
+  Mat combined;
+  Mat combined_flipped;
+  ///hconcat takes in input array 1 and 2, then the output array
+  hconcat(left_side, right_side, combined);
+  hconcat(right_side, left_side, combined_flipped);
 
-  /// Create a Trackbar for user to enter threshold
-  createTrackbar( "Min Threshold:", window_name, &lowThreshold, max_lowThreshold, CannyThreshold );
+  imshow("my window", combined);
 
-  /// Show the image
-  CannyThreshold(0, 0);
+  Mat resized_combined(500, 1000, CV_8UC3);
+  Mat resized_combined_flipped(500, 1000, CV_8UC3);
 
+  resize(combined, resized_combined, resized_combined.size(), 0,0,CV_INTER_LINEAR);
+  resize(combined_flipped, resized_combined_flipped, resized_combined_flipped.size(), 0, 0, CV_INTER_LINEAR);
+
+  imshow("my window", resized_combined);	
+ 
+  Mat quad_combined;
+  
+  vconcat(resized_combined, resized_combined_flipped, quad_combined);
+
+  imshow("my other window", quad_combined);
+
+  Mat big_boi(1000, 1000, CV_8UC3);
+  resize(left_side, big_boi, big_boi.size(), 0, 0, CV_INTER_LINEAR);
+  cvtColor(big_boi, big_boi, CV_BGR2HSV);
+  Mat mega_big_boi(1000, 2000, CV_8UC3);
+  hconcat(big_boi, quad_combined, mega_big_boi);
+
+  imshow("mega big boi window", mega_big_boi);  
   /// Wait until user exit program by pressing a key
   waitKey(0);
 
