@@ -19,7 +19,7 @@ int main(){
 	//this can be done on the publisher side, or adding the sockopt using
 	//something like subscriber.setsockopt(ZMQ_CONFLATE);
 
-	subscriber.connect("tcp://10.4.18.2:5805"); //this is the address for a port on the roborio
+	subscriber.connect("tcp://10.4.18.2:5809"); //this is the address for a port on the roborio
 	
 	string message_from_roborio = "";
 	while(message_from_roborio != "END"){ //it's better to use a loop condition more specific to your project

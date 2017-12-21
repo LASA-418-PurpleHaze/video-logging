@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/logging_client_demo.dir/logging_client_demo.cpp.o  -o logging_client_demo -rdynamic -lzmq 
