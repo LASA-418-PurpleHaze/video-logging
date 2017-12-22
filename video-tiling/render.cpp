@@ -9,13 +9,11 @@
 using namespace cv;
 
 int main(int argc, char const *argv[]) {
-  VideoCapture my_video = VideoCapture();
-  std::cout << argv[0];
-  my_video.open( argv[0] );
-  Mat outp;
+  VideoCapture my_video = VideoCapture( argv[0] );
+  Mat outp(100,100,CV_8UC3);
   namedWindow("window", CV_WINDOW_AUTOSIZE);
   while (true) {
-    my_video >> outp;
+    my_video.read(outp);
     if (!outp.empty()) {
       imshow("window", outp);
     }
