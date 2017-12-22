@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.2)
+project(video-logging-test)
+set(CMAKE_CXX_STANDARD 14)
+find_library(ZMQ_LIBS NAMES zmq)
+add_executable(client client.cpp)
+add_executable(server server.cpp)
+target_link_libraries(client ${ZMQ_LIBS})
+target_link_libraries(server ${ZMQ_LIBS})

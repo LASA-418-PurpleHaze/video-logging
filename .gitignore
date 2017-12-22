@@ -32,7 +32,7 @@
 *.app
 
 */CMakeFiles/*
-Makefile
+*/Makefile
 *.cmake
-CMakeCache.txt
+*/CMakeCache.txt
 *.swp

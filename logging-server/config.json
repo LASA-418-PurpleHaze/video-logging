@@ -1,0 +1,10 @@
+[
+  {
+    "address": "tcp://localhost:8888",
+    "ns": "test-ns"
+  },
+  {
+    "address": "tcp://localhost:8888",
+    "ns": "logger"
+  }
+]
