@@ -9,17 +9,32 @@
 using namespace cv;
 
 int main(int argc, char const *argv[]) {
-  VideoCapture my_video = VideoCapture();
-  std::cout << argv[0];
-  my_video.open( argv[0] );
-  Mat outp;
-  namedWindow("window", CV_WINDOW_AUTOSIZE);
-  while (true) {
-    my_video >> outp;
-    if (!outp.empty()) {
-      imshow("window", outp);
+  VideoCapture cap( argv[1] );
+  VideoCapture videoDos( argv[2] );
+  
+  Mat outframe;
+  namedWindow("Viewer",1);
+  for(;;)
+  {
+    Mat frame;
+    Mat frame2;
+    cap >> frame;
+    videoDos >> frame2;
+    if (!frame.empty() && !frame2.empty()) {
+      hconcat(frame, frame2, outframe);
+      imshow("Viewer", outframe);
     }
+    else if(frame.empty() && !frame2.empty()) {
+      imshow("Viewer", frame2);
+    }
+    else if(frame2.empty() && !frame.empty()) {
+      imshow("Viewer", frame);
+    }
+    else {
+      std::clog << "Video ended" << '\n';
+      break;
+    }
+    if(waitKey(1) == 27) break;
   }
-  my_video.release();
   return 0;
 }
