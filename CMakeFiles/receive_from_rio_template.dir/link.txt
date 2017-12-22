@@ -1,1 +1,0 @@
-/usr/bin/c++      CMakeFiles/receive_from_rio_template.dir/receive_from_rio_template.cpp.o  -o receive_from_rio_template -rdynamic -lzmq 

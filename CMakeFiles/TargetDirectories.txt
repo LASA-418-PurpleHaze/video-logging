@@ -1,5 +1,0 @@
-/home/nvidia/github/video-logging/CMakeFiles/logging_server.dir
-/home/nvidia/github/video-logging/CMakeFiles/edit_cache.dir
-/home/nvidia/github/video-logging/CMakeFiles/receive_from_rio_template.dir
-/home/nvidia/github/video-logging/CMakeFiles/logging_client_demo.dir
-/home/nvidia/github/video-logging/CMakeFiles/rebuild_cache.dir
