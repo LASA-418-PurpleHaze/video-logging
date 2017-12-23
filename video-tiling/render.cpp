@@ -14,27 +14,31 @@ int main(int argc, char const *argv[]) {
   
   Mat outframe;
   namedWindow("Viewer",1);
+  Mat liveFrame, liveFrame2;
   for(;;)
   {
-    Mat frame;
-    Mat frame2;
-    cap >> frame;
-    videoDos >> frame2;
-    if (!frame.empty() && !frame2.empty()) {
-      hconcat(frame, frame2, outframe);
-      imshow("Viewer", outframe);
-    }
-    else if(frame.empty() && !frame2.empty()) {
-      imshow("Viewer", frame2);
-    }
-    else if(frame2.empty() && !frame.empty()) {
-      imshow("Viewer", frame);
-    }
-    else {
+    Mat frame, frame2;
+    cap >> frame, videoDos >> frame2;
+    if(frame.empty() && frame2.empty()) {
       std::clog << "Video ended" << '\n';
       break;
     }
-    if(waitKey(1) == 27) break;
+    else if(frame2.empty()) {
+      liveFrame = frame.clone();
+      liveFrame2.setTo(Scalar(0,0,255));
+    }
+    else if(frame.empty()) {
+      liveFrame2 = frame2.clone();
+      liveFrame.setTo(Scalar(0,0,255));
+    }
+    else {
+      liveFrame = frame.clone();
+      liveFrame2 = frame2.clone();
+    }
+    liveFrame2.resize(liveFrame.rows, Scalar(0,255,0));
+    hconcat(liveFrame, liveFrame2, outframe);
+    imshow("Viewer", outframe);
+    if(waitKey(30) == 27) break;
   }
   return 0;
 }
