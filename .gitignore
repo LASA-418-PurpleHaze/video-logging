@@ -36,3 +36,4 @@
 *.cmake
 */CMakeCache.txt
 *.swp
+*.avi
