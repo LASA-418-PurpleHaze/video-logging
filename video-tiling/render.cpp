@@ -65,7 +65,7 @@ int main(int argc, char const *argv[]) {
   line_item control = read_in_line(my_data);
   long start_point = control.timestamp;
   std::cout << control.toString() << '\n';
-  outvid.open("video.avi", CV_FOURCC('M','J','P','G'), (int)(my_fps + 0.5), outframe.size());
+  outvid.open("video.avi", CV_FOURCC('H','2','6','4'), (int)(my_fps + 0.5), outframe.size());
   outvid.write(outframe);
   Mat frame, frame2;
   std::map<std::string, std::string> variables;
